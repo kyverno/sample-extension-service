@@ -21,7 +21,7 @@ Refer to [cert-manager installation docs](https://cert-manager.io/docs/installat
 kubectl apply -f manifests/install.yaml 
 ```
 
-3. Check access from a test pod
+3. Verify service access from a test pod
 
 Run netshoot:
 
