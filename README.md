@@ -1,4 +1,4 @@
-# Sample Extension Services for Kyverno
+# Sample Extension Service for Kyverno
 
 This repository contains a sample extension service for Kyverno that performs a namespace check to allow or denying creation of a resource. Requests where the namespace is `default` or empty are not allowed.
 
