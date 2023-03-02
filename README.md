@@ -1,6 +1,6 @@
 # Sample Extension Services for Kyverno
 
-This repository contains sample extension services for Kyverno, that performs a namespace check to allow or denying creation of a resource. Requests where the namespace is `default` or empty are not allowed.
+This repository contains a sample extension service for Kyverno that performs a namespace check to allow or denying creation of a resource. Requests where the namespace is `default` or empty are not allowed.
 
 The [accompanying policy](/policies/check-namespace.yaml) checks namespaces for `ConfigMap` resources by making a call to the extenstion service. 
 
