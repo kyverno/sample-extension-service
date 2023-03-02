@@ -1,0 +1,27 @@
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: check-namespaces      
+spec:
+  validationFailureAction: Enforce
+  rules:
+  - name: call-extension
+    match:
+      any:
+      - resources:
+          kinds:
+          - ConfigMap
+    context:
+    - name: result
+      apiCall:
+        service:
+          requestType: GET
+          urlPath: http://sample.kyverno-extension/check-namespace?namespace={{request.namespace}}
+    validate:
+      message: "namespace {{request.namespace}} is not allowed"
+      deny:
+        conditions:
+          all:
+          - key: "{{ result.allowed }}"
+            operator: EQUALS
+            value: false
