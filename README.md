@@ -93,7 +93,21 @@ Get the generated certificate keychain:
 kubectl get secret sample-tls -n kyverno-extension -o json | jq -r '.data."tls.crt"' | base64 -d && kubectl get secret sample-tls -n kyverno-extension -o json | jq -r '.data."ca.crt"' | base64 -d
 ```
 
-Update the policy to configure your certificate chain:
+Update the samle policy to add your certificate chain. You can then switch the URL to use `https` instead of `http`.
+
+Invoking `https` without a `caBundle` or with the wrong keys will result in an error:
+
+```sh
+kubectl create cm test  --dry-run=server
+error: failed to create configmap: admission webhook "validate.kyverno.svc-fail" denied the request: 
+
+policy ConfigMap/default/test for resource error: 
+
+check-namespaces:
+  call-extension: 'failed to load context: failed to execute APICall: failed to execute
+    HTTP request for APICall result: Post "https://sample.kyverno-extension/check-namespace":
+    x509: certificate signed by unknown authority'
+```
 
 ## Building
 
