@@ -33,22 +33,24 @@ Try accessing the HTTP GET endpoint with a valid namespace:
 
 ```sh
 curl "http://sample.kyverno-extension/check-namespace?namespace=test"
-{"allowed": true}
 ```
+ç: `{"allowed": true}`
 
 Try accessing the HTTPS GET endpoint with an invalid:
 
 ```sh
 curl "http://sample.kyverno-extension/check-namespace?namespace=default"
-{"allowed": false}
 ```
+
+Result: `{"allowed": false}`
 
 Try accessing the HTTPS POST endpoint with a valid namespace:
 
 ```sh
 curl -k https://sample.kyverno-extension/check-namespace -X POST --data '{"namespace" : "test"}'
-{"allowed": true}
 ```
+
+Result: `{"allowed": true}`
 
 4. Test with a HTTP call from the policy
 
@@ -62,21 +64,24 @@ Try to create a `ConfigMap` in the default namespace. It will be blocked:
 
 ```sh
 kubectl create cm test
-error: failed to create configmap: admission webhook "validate.kyverno.svc-fail" denied the request: 
-
-policy ConfigMap/default/test for resource violation: 
-
-check-namespaces:
-  call-extension: namespace default is not allowed
 ```
+This shoud show an error:
+> error: failed to create configmap: admission webhook "validate.kyverno.svc-fail" denied the request: 
+>
+> policy ConfigMap/default/test for resource violation: 
+>
+> check-namespaces:
+> call-extension: namespace default is not allowed
 
 
 Try to create a `ConfigMap` in some other namespace. It will be allowed:
 
 ```sh
 kubectl create cm test -n kube-system --dry-run=server
-configmap/test created (server dry run)
 ```
+
+This should be allowed:
+> configmap/test created (server dry run)
 
 5. Test with a HTTPS call from the policy
 
