@@ -34,7 +34,8 @@ Try accessing the HTTP GET endpoint with a valid namespace:
 ```sh
 curl "http://sample.kyverno-extension/check-namespace?namespace=test"
 ```
-ç: `{"allowed": true}`
+Result:
+> {"allowed": true}
 
 Try accessing the HTTPS GET endpoint with an invalid:
 
