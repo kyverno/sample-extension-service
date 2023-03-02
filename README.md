@@ -42,15 +42,16 @@ Try accessing the HTTPS GET endpoint with an invalid:
 curl "http://sample.kyverno-extension/check-namespace?namespace=default"
 ```
 
-Result: `{"allowed": false}`
+Result:
+> {"allowed": false}
 
 Try accessing the HTTPS POST endpoint with a valid namespace:
 
 ```sh
 curl -k https://sample.kyverno-extension/check-namespace -X POST --data '{"namespace" : "test"}'
 ```
-
-Result: `{"allowed": true}`
+Result:
+> {"allowed": true}
 
 4. Test with a HTTP call from the policy
 
@@ -65,7 +66,7 @@ Try to create a `ConfigMap` in the default namespace. It will be blocked:
 ```sh
 kubectl create cm test
 ```
-This shoud show an error:
+Result:
 > error: failed to create configmap: admission webhook "validate.kyverno.svc-fail" denied the request: 
 >
 > policy ConfigMap/default/test for resource violation: 
@@ -80,24 +81,18 @@ Try to create a `ConfigMap` in some other namespace. It will be allowed:
 kubectl create cm test -n kube-system --dry-run=server
 ```
 
-This should be allowed:
+Result:
 > configmap/test created (server dry run)
 
 5. Test with a HTTPS call from the policy
 
 Get the generated certificate keychain:
 
-```bash
-(kubectl get secret sample-tls -n kyverno-extension -o json | jq -r '.data."tls.crt"' | base64 -d; kubectl get secret sample-tls -n kyverno-extension -o json | jq -r '.data."ca.crt"' | base64 -d ) | cat
-```
-
-```fish
+```sh
 kubectl get secret sample-tls -n kyverno-extension -o json | jq -r '.data."tls.crt"' | base64 -d && kubectl get secret sample-tls -n kyverno-extension -o json | jq -r '.data."ca.crt"' | base64 -d
 ```
 
 Update the policy to configure your certificate chain:
-
-
 
 ## Building
 
