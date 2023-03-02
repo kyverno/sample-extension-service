@@ -18,7 +18,7 @@ spec:
           #requestType: GET
           #urlPath: http://sample.kyverno-extension/check-namespace?namespace={{request.namespace}}
           requestType: POST
-          urlPath: https://sample.kyverno-extension/check-namespace
+          urlPath: http://sample.kyverno-extension/check-namespace
           data:
           - key: namespace
             value: "{{request.namespace}}"
